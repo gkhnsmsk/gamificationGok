@@ -74,20 +74,19 @@ body{
 
 
 h2{
-    font-size: 35px;
-    margin-right: 25px;
-    text-align: center;
+    font-size: 25px;
+    margin-left: 40px;
 }
 
 .progress{
-    font-size: 35px;
-    margin-left: 80px;
+    font-size: 30px;
+    margin-left: 40px;
 }
 
 .meter { 
     height: 20px;
     width: 450px;
-    margin-left: 70px;
+    margin-left: 25px;
 	position: relative;
 	background: #555;
 	border-radius: 25px;
