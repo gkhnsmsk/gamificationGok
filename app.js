@@ -5,7 +5,7 @@ $( document ).ready(function() {
 // $(".bad_value").html("1");
 
 
-  function httpGet("https://192.168.178.41:8123/lovelace/1/")
+  function httpGet("192.168.178.41:8123/lovelace/1/")
 {
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
