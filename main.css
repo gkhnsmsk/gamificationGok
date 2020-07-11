@@ -86,8 +86,8 @@ h2{
 
 .meter { 
     height: 20px;
-    width: 450px;
-    margin-left: 25px;
+    width: 400px;
+    margin-left: 15px;
 	position: relative;
 	background: #555;
 	border-radius: 25px;
