@@ -5,10 +5,13 @@ $( document ).ready(function() {
 // $(".bad_value").html("1");
 
 
+$.get('test.txt', function(data) {
+    var obj = jQuery.parseJSON(data);
 
-jQuery.get('192.168.178.41:8123/lovelace/1', function(data) {
-    console.log(data);
-});
+    console.log(obj[2].state);
+    $(".bad_value").html(obj[2].state);
+
+ }, 'text');
 
 
 });
