@@ -34,9 +34,6 @@ def avarageCalculate(dailyValue,num_lines,jsonOutput):
      if (int(float(valueArray[x])) < GERMANY_AVARAGE):
       total += 1
  
-
-  print total
-
   jsonOutput[0]["daily"] = total
   file_object = open('output.txt', 'w')
   file_object.write(json.dumps(jsonOutput))

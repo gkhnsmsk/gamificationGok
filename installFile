@@ -1,0 +1,2 @@
+docker container stop gameServer
+docker container rm gameServer
