@@ -1,1 +1,1 @@
-[{"perfect": 41, "bad": 21, "good": 6, "daily": 3, "cool": 16}]
+[{"perfect": 41, "bad": 21, "good": 6, "daily": 4, "cool": 16}]

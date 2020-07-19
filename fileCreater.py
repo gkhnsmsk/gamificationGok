@@ -3,13 +3,14 @@ import subprocess
 import os
 
 GERMANY_AVARAGE = 6000
+PATH = "/home/pi/Documents/gameServer/"
 
 # daily 
 # (string) dailyValue
 # add daily_avarage to the file
 def daily(dailyValue):
 
-  file_object = open('last10values.txt', 'a')
+  file_object = open(PATH+'last10values.txt', 'a')
   file_object.write("\n")
   file_object.write(dailyValue)
   file_object.close()
@@ -22,7 +23,7 @@ def daily(dailyValue):
 # reading the last 10 days energy
 def avarageCalculate(dailyValue,num_lines,jsonOutput):
   
-  file_object = open('last10values.txt', 'r')
+  file_object = open(PATH+'last10values.txt', 'r')
   lines = file_object.read().split(",")
   file_object.close()
 
@@ -35,7 +36,7 @@ def avarageCalculate(dailyValue,num_lines,jsonOutput):
       total += 1
  
   jsonOutput[0]["daily"] = total
-  file_object = open('output.txt', 'w')
+  file_object = open(PATH+'output.txt', 'w')
   file_object.write(json.dumps(jsonOutput))
   file_object.close()
 
@@ -53,18 +54,17 @@ def tenDayResult(jsonOutput,returnCurrentTotal):
   else:
     jsonOutput[0]["perfect"] += 1
   
-  file_object = open('./output.txt', 'w')
+  file_object = open(PATH+'output.txt', 'w')
   file_object.write(json.dumps(jsonOutput))
   file_object.close()
 
-
 # reading files from json output from Sensors
-with open('./test.txt', 'r') as f:
+with open(PATH+'test.txt', 'r') as f:
     data = f.read()
     jstr = json.loads(data)
 
 
-with open('./output.txt', 'r') as output:
+with open(PATH+'output.txt', 'r') as output:
     dataOutput = output.read()
     jsonOutput = json.loads(dataOutput)
     
@@ -73,7 +73,7 @@ dailyValue = jstr[5]["attributes"]["last_period"]
 daily(dailyValue)
 
 # line counter of the last10values.txt
-num_lines = sum(1 for line in open('last10values.txt'))
+num_lines = sum(1 for line in open(PATH+'last10values.txt'))
 
 # get avarage values of 
 returnCurrentTotal = avarageCalculate(dailyValue,num_lines,jsonOutput)
@@ -81,5 +81,5 @@ returnCurrentTotal = avarageCalculate(dailyValue,num_lines,jsonOutput)
 
 if num_lines >= 11 :
   tenDayResult(jsonOutput,returnCurrentTotal)
-  os.remove("last10values.txt")
+  os.remove(PATH+"last10values.txt")
   
