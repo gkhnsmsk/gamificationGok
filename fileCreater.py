@@ -53,18 +53,18 @@ def tenDayResult(jsonOutput,returnCurrentTotal):
   else:
     jsonOutput[0]["perfect"] += 1
   
-  file_object = open('output.txt', 'w')
+  file_object = open('./output.txt', 'w')
   file_object.write(json.dumps(jsonOutput))
   file_object.close()
 
 
 # reading files from json output from Sensors
-with open('test.txt', 'r') as f:
+with open('./test.txt', 'r') as f:
     data = f.read()
     jstr = json.loads(data)
 
 
-with open('output.txt', 'r') as output:
+with open('./output.txt', 'r') as output:
     dataOutput = output.read()
     jsonOutput = json.loads(dataOutput)
     
