@@ -1,12 +1,64 @@
 import json
 import subprocess
+import os
+
+GERMANY_AVARAGE = 6000
+
+# daily 
+# (string) dailyValue
+# add daily_avarage to the file
+def daily(dailyValue):
+
+  file_object = open('last10values.txt', 'a')
+  file_object.write("\n")
+  file_object.write(dailyValue)
+  file_object.close()
+
+# avarageCalculate 
+# (string) dailyValue
+# (int) num_lines
+# (array) jsonOutput
+# return (int)total
+# reading the last 10 days energy
+def avarageCalculate(dailyValue,num_lines,jsonOutput):
+  
+  file_object = open('last10values.txt', 'r')
+  lines = file_object.read().split(",")
+  file_object.close()
+
+  valueArray = lines[0].split("\n")
+  total = 0
+
+  for x in range(num_lines):
+    if(valueArray[x] != ''):
+     if (int(float(valueArray[x])) < GERMANY_AVARAGE):
+      total += 1
+ 
+
+  print total
+
+  jsonOutput[0]["daily"] = total
+  file_object = open('output.txt', 'w')
+  file_object.write(json.dumps(jsonOutput))
+  file_object.close()
+
+  return total
 
 
-def my_function(currentValue,avg,jsonOutput):
+def tenDayResult(jsonOutput,returnCurrentTotal):
 
-  newOutputValues=jsonOutput[0];
-
-  print avg
+  if (returnCurrentTotal < 4):
+    jsonOutput[0]["bad"] += 1
+  elif (returnCurrentTotal >= 4 and returnCurrentTotal < 7):
+    jsonOutput[0]["cool"] += 1
+  elif (returnCurrentTotal >= 7 and returnCurrentTotal < 10):
+    jsonOutput[0]["good"] += 1
+  else:
+    jsonOutput[0]["perfect"] += 1
+  
+  file_object = open('output.txt', 'w')
+  file_object.write(json.dumps(jsonOutput))
+  file_object.close()
 
 
 # reading files from json output from Sensors
@@ -19,25 +71,18 @@ with open('output.txt', 'r') as output:
     dataOutput = output.read()
     jsonOutput = json.loads(dataOutput)
     
-# reading the last 10 days energy
-file_object = open('temp10Values.txt', 'r')
-lines = file_object.read().split(",")
-file_object.close()
-num_lines = sum(1 for line in open('temp10Values.txt'))
+# get and add daily_gesamt value to the file
+dailyValue = jstr[5]["attributes"]["last_period"]
+daily(dailyValue)
 
-valueArray = lines[0].split("\n")
-total = 0
-for x in range(num_lines):
-  total += int(round(float(valueArray[x])))
+# line counter of the last10values.txt
+num_lines = sum(1 for line in open('last10values.txt'))
 
-avg = total/num_lines
-
-my_function(jstr[2]["state"],avg,jsonOutput)
+# get avarage values of 
+returnCurrentTotal = avarageCalculate(dailyValue,num_lines,jsonOutput)
 
 
-file_object = open('last10values.txt', 'a')
-file_object.write("\n")
-file_object.write(jstr[2]["state"])
-file_object.close()
-
-
+if num_lines >= 11 :
+  tenDayResult(jsonOutput,returnCurrentTotal)
+  os.remove("last10values.txt")
+  
