@@ -1,2 +1,7 @@
 docker container stop gameServer
 docker container rm gameServer
+docker container run  -d --publish 8080:80 -v /home/pi/Documents/gameServer:/usr/share/nginx/html  --name gameServer nginx:latest
+
+
+59 23 * * * curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIU$
+59 23 * * * python /home/pi/Documents/gameServer/fileCreater.py
