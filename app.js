@@ -14,6 +14,11 @@ $.get('output.txt', function(data) {
 
     var width = (obj[0]["daily"] * 10) ;
 
+
+    if (obj[0]["daily"] > 10){
+        width = 100;
+    }
+    
     $(".meter span").css("width", width+"%");
 
 

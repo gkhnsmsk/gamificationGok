@@ -3,5 +3,9 @@ docker container rm gameServer
 docker container run  -d --publish 8080:80 -v /home/pi/Documents/gameServer:/usr/share/nginx/html  --name gameServer nginx:latest
 
 
-59 23 * * * curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIU$
-59 23 * * * python /home/pi/Documents/gameServer/fileCreater.py
+01 19 * * * curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIyOWY5ZjVjNDQ4MGY0MWRmOWQyOTczNTAwYzBjNzFiOCIsImlhdCI6MTU5NDU0NjY5NiwiZXhwIjoxOTA5OTA2Njk2fQ.nghAX41CeBEJWRh910Ba2F7eDFWMkSGNpNsBwot1KW8" -H "Content-Type: application/json"  http://192.168.178.41:8123/api/states > test.txt
+01 19 * * * python /home/pi/Documents/gameServer/fileCreater.py
+
+0 1 * * * curl -X GET -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIy$
+0 1 * * * /usr/bin/python /home/pi/Documents/gameServer/fileCreater.py
+
