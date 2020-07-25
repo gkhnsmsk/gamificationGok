@@ -1,9 +1,11 @@
 import json
 import subprocess
 import os
+from datetime import date
 
 GERMANY_AVARAGE = 4000
-PATH = "/home/pi/Documents/gameServer/"
+PATH = "" 
+#"/home/pi/Documents/gameServer/"
 
 # daily 
 # (string) dailyValue
@@ -14,6 +16,21 @@ def daily(dailyValue):
   file_object.write(dailyValue)
   file_object.write("\n")
   file_object.close()
+
+# save daily 
+# (int) dailyValue
+# add daily_avarage to the file
+def history(dailyValue):
+
+  today = date.today()
+  dateStr = today. strftime("%d %b %Y ")
+  sDaily = str(dailyValue)
+
+  file_object = open(PATH+'history.txt', 'a')
+  file_object.write(dateStr + "------> " + sDaily)
+  file_object.write("\n")
+  file_object.close()
+
 
 # avarageCalculate 
 # (string) dailyValue
@@ -35,6 +52,9 @@ def avarageCalculate(dailyValue,num_lines,jsonOutput):
      if (int(float(valueArray[x])) < GERMANY_AVARAGE):
       total += 1
  
+  if (total == 11):
+    total = 1
+  
   jsonOutput[0]["daily"] = total
   file_object = open(PATH+'output.txt', 'w')
   file_object.write(json.dumps(jsonOutput))
@@ -71,7 +91,7 @@ with open(PATH+'output.txt', 'r') as output:
 # get and add daily_gesamt value to the file
 dailyValue = jstr[6]["attributes"]["last_period"]
 daily(dailyValue)
-
+history(dailyValue)
 # line counter of the last10values.txt
 num_lines = sum(1 for line in open(PATH+'last10values.txt'))
 
@@ -82,4 +102,5 @@ returnCurrentTotal = avarageCalculate(dailyValue,num_lines,jsonOutput)
 if num_lines >= 11 :
   tenDayResult(jsonOutput,returnCurrentTotal)
   os.remove(PATH+"last10values.txt")
-  
+  daily(dailyValue)
+
