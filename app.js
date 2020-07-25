@@ -1,11 +1,8 @@
 $( document ).ready(function() {
 
-
-
-$.get('output.txt', function(data) {
+    $.get('./output.txt', function(data) {
+   
     var obj = jQuery.parseJSON(data);
-
-    console.log(obj[0]["bad"]);
 
     $(".bad_value").html(obj[0]["bad"]);
     $(".cool_value").html(obj[0]["cool"]);
@@ -14,7 +11,7 @@ $.get('output.txt', function(data) {
 
     var width = (obj[0]["daily"] * 10) ;
 
-
+    
     if (obj[0]["daily"] > 10){
         width = 100;
     }
